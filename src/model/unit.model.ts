@@ -1,3 +1,4 @@
+
 export interface IUnit {
    id?: number;
    name?: string;
@@ -12,6 +13,10 @@ export interface IUnit {
    line_of_sight?: number;
    hit_points?:number;
    accuracy?:string;
+   armor?: string;
+   attack?:number;
+   range?: number;
+   attack_bonus?: Array<string>
 
 }
 
