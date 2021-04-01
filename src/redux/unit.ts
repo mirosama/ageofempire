@@ -1,7 +1,10 @@
 import axios from './api';
 
+
+import {  put, takeLatest } from "redux-saga/effects";
 import { IUnit } from '../model/unit.model';
-import { put, takeLatest } from 'redux-saga/effects';
+import { call } from 'typed-redux-saga';
+
 
 
 export const actionTypes = {
@@ -50,12 +53,12 @@ const initialState = {
   };
 
 
-  //redux saga 
 
-  export function* fetchAllUnits () {
-    yield takeLatest(actionTypes.FETCH_UNITS, async function* fetchUnits() {
-      // const response = await callUnitService();
-        let units =[] as Array<IUnit>;
+  //redux saga 
+  export  function* fetchAllUnits () {
+    yield takeLatest(actionTypes.FETCH_UNITS,   function* fetchUnits() {
+       const units:Promise<IUnit>  =  yield* call(callUnitService) ;
+      
         yield put(actions.fetchUnitsSuccess(units));
       });
   };
@@ -63,7 +66,7 @@ const initialState = {
 
 
   //axios call 
-  export const callUnitService =  () => {
+  export const callUnitService = async () => {
     return  axios.get('/units').then(({data}) => {
       return data;
     }).catch(function (error) {
@@ -71,4 +74,5 @@ const initialState = {
     });
   
   };
+  
   
